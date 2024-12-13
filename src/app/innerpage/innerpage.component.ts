@@ -46,6 +46,7 @@ import { AuthService } from "../services/authentication/auth.service";
 import { RegisterService } from "../services/register-services/register-service";
 import { Subscription } from "rxjs/Subscription";
 import { SetLanguageComponent } from "app/set-language.component";
+import { sessionStorageService } from "app/services/sessionStorageService/session-storage.service";
 
 declare const jQuery: any;
 
@@ -120,6 +121,7 @@ export class InnerpageComponent implements OnInit {
   current_roleID: any;
 
   constructor(
+    private sessionstorage:sessionStorageService,
     public getCommonData: dataService,
     private _callServices: CallServices,
     public basicrouter: Router,
@@ -173,11 +175,11 @@ export class InnerpageComponent implements OnInit {
     this.ctiHandlerURL = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     console.log("url = " + url);
     this.ctiHandlerURL = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    if (sessionStorage.getItem("CLI") !== undefined) {
-      this.callerNumber = sessionStorage.getItem("CLI");
+    if (this.sessionstorage.getItem("CLI") !== undefined) {
+      this.callerNumber = this.sessionstorage.getItem("CLI");
     }
-    if (sessionStorage.getItem("callCategory") !== undefined) {
-      if (sessionStorage.getItem("callCategory") === "OUTBOUND") {
+    if (this.sessionstorage.getItem("callCategory") !== undefined) {
+      if (this.sessionstorage.getItem("callCategory") === "OUTBOUND") {
         this.getCommonData.isOutbound = true;
       } else {
         this.getCommonData.isOutbound = false;
@@ -219,7 +221,7 @@ export class InnerpageComponent implements OnInit {
     // this.addListener();
     this.getAgentStatus();
     this.getAgentCallDetails();
-    this.isEverwell = sessionStorage.getItem("isEverwellCall");
+    this.isEverwell = this.sessionstorage.getItem("isEverwellCall");
 
     this.fetchLanguageSet();
   }
@@ -463,11 +465,11 @@ export class InnerpageComponent implements OnInit {
       );
     } else {
       this.ipSuccessLogoutHandler(this.getCommonData.loginIP);
-      // sessionStorage.removeItem('isOnCall');
-      // sessionStorage.removeItem('isEverwellCall');
+      // this.sessionstorage.removeItem('isOnCall');
+      // this.sessionstorage.removeItem('isEverwellCall');
       // this.basicrouter.navigate(['']);
       // this.authService.removeToken();
-      // sessionStorage.removeItem("setLanguage");
+      // this.sessionstorage.removeItem("setLanguage");
       // this.getCommonData.appLanguage="English";
     }
   }
@@ -497,20 +499,20 @@ export class InnerpageComponent implements OnInit {
     if (this.current_role.toLowerCase() === "supervisor") {
       this.Czentrix.userLogout().subscribe(
         (response) => {
-          sessionStorage.removeItem("isOnCall");
-          sessionStorage.removeItem("isEverwellCall");
-          sessionStorage.removeItem("apiman_key");
-          sessionStorage.removeItem("setLanguage");
+          this.sessionstorage.removeItem("isOnCall");
+          this.sessionstorage.removeItem("isEverwellCall");
+          this.sessionstorage.removeItem("apiman_key");
+          this.sessionstorage.removeItem("setLanguage");
           this.authService.removeToken();
           this.getCommonData.appLanguage = "English";
           this.basicrouter.navigate([""]);
           // this.socketService.logOut();
         },
         (err) => {
-          sessionStorage.removeItem("isOnCall");
-          sessionStorage.removeItem("isEverwellCall");
-          sessionStorage.removeItem("apiman_key");
-          sessionStorage.removeItem("setLanguage");
+          this.sessionstorage.removeItem("isOnCall");
+          this.sessionstorage.removeItem("isEverwellCall");
+          this.sessionstorage.removeItem("apiman_key");
+          this.sessionstorage.removeItem("setLanguage");
           this.authService.removeToken();
           this.getCommonData.appLanguage = "English";
           this.basicrouter.navigate([""]);
@@ -526,20 +528,20 @@ export class InnerpageComponent implements OnInit {
           if (res.response.status.toUpperCase() !== "FAIL") {
             this.Czentrix.userLogout().subscribe(
               (response) => {
-                sessionStorage.removeItem("isOnCall");
-                sessionStorage.removeItem("isEverwellCall");
-                sessionStorage.removeItem("apiman_key");
-                sessionStorage.removeItem("setLanguage");
+                this.sessionstorage.removeItem("isOnCall");
+                this.sessionstorage.removeItem("isEverwellCall");
+                this.sessionstorage.removeItem("apiman_key");
+                this.sessionstorage.removeItem("setLanguage");
                 this.authService.removeToken();
                 this.getCommonData.appLanguage = "English";
                 this.basicrouter.navigate([""]);
                 // this.socketService.logOut();
               },
               (err) => {
-                sessionStorage.removeItem("isOnCall");
-                sessionStorage.removeItem("isEverwellCall");
-                sessionStorage.removeItem("apiman_key");
-                sessionStorage.removeItem("setLanguage");
+                this.sessionstorage.removeItem("isOnCall");
+                this.sessionstorage.removeItem("isEverwellCall");
+                this.sessionstorage.removeItem("apiman_key");
+                this.sessionstorage.removeItem("setLanguage");
                 this.getCommonData.appLanguage = "English";
                 this.authService.removeToken();
                 this.basicrouter.navigate([""]);
@@ -561,9 +563,9 @@ export class InnerpageComponent implements OnInit {
     // if (this.current_role.toLowerCase() !== 'supervisor') {
     //   this.Czentrix.agentLogout(this.getCommonData.cZentrixAgentID, response).subscribe((res) => {
     //     if (res.response.status.toUpperCase() !== 'FAIL') {
-    //       sessionStorage.removeItem('isOnCall');
-    //       sessionStorage.removeItem('isEverwellCall');
-    //       sessionStorage.removeItem("setLanguage");
+    //       this.sessionstorage.removeItem('isOnCall');
+    //       this.sessionstorage.removeItem('isEverwellCall');
+    //       this.sessionstorage.removeItem("setLanguage");
     //       this.getCommonData.appLanguage="English";
     //       this.basicrouter.navigate(['']);
     //     } else {
@@ -575,9 +577,9 @@ export class InnerpageComponent implements OnInit {
     //     this.remarksMessage.alert(err.errorMessage);
     //   });
     // } else {
-    //   sessionStorage.removeItem('isOnCall');
-    //   sessionStorage.removeItem('isEverwellCall');
-    //   sessionStorage.removeItem("setLanguage");
+    //   this.sessionstorage.removeItem('isOnCall');
+    //   this.sessionstorage.removeItem('isEverwellCall');
+    //   this.sessionstorage.removeItem("setLanguage");
     //   this.getCommonData.appLanguage="English";
     //   this.basicrouter.navigate(['']);
     // }
@@ -798,13 +800,13 @@ export class InnerpageComponent implements OnInit {
       requestObj["agentID"] = this.getCommonData.cZentrixAgentID;
       requestObj["endCall"] = true;
     }
-    if (sessionStorage.getItem("session_id") === this.custdisconnectCallID) {
+    if (this.sessionstorage.getItem("session_id") === this.custdisconnectCallID) {
       this._callServices.closeCall(requestObj).subscribe(
         (response) => {
           if (response) {
             this.remarksMessage.alert(message, "success");
-            sessionStorage.removeItem("isOnCall");
-            sessionStorage.removeItem("isEverwellCall");
+            this.sessionstorage.removeItem("isOnCall");
+            this.sessionstorage.removeItem("isEverwellCall");
             this.basicrouter.navigate(["/MultiRoleScreenComponent/dashboard"]);
             this._common.everwellCallNotConnected = null;
           }
@@ -983,8 +985,8 @@ export class InnerpageComponent implements OnInit {
   }
 
   getLanguage() {
-    if (sessionStorage.getItem("setLanguage") != null) {
-      this.changeLanguage(sessionStorage.getItem("setLanguage"));
+    if (this.sessionstorage.getItem("setLanguage") != null) {
+      this.changeLanguage(this.sessionstorage.getItem("setLanguage"));
     } else {
       this.changeLanguage(this.app_language);
     }
@@ -1014,7 +1016,7 @@ export class InnerpageComponent implements OnInit {
     }
     console.log("language is ", response);
     this.currentLanguageSet = response[language];
-    sessionStorage.setItem("setLanguage", language);
+    this.sessionstorage.setItem("setLanguage", language);
     if (this.currentLanguageSet) {
       this.languageArray.forEach((item) => {
         if (item.languageName === language) {

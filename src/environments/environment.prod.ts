@@ -20,8 +20,11 @@
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
+import { keys } from "./enckey";
+
 
 export const environment = {
   production: true,
-  invalidCallType: 'Invalid'
+  invalidCallType: 'Invalid',
+  encKey: keys.prod,
 };

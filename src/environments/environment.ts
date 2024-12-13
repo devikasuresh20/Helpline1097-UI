@@ -20,6 +20,8 @@
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
 
+import { keys } from "./enckey";
+
 
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
@@ -28,5 +30,6 @@
 
 export const environment = {
   production: false,
-  invalidCallType: 'Invalid'
+  invalidCallType: 'Invalid',
+  encKey: keys.dev,
 };

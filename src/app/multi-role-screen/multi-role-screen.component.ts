@@ -40,6 +40,7 @@ import { AgentForceLogoutComponent } from '../agent-force-logout/agent-force-log
 import { HttpServices } from "../services/http-services/http_services.service";
 import { ViewVersionDetailsComponent } from '../view-version-details/view-version-details.component';
 import { SetLanguageComponent } from 'app/set-language.component';
+import { sessionStorageService } from 'app/services/sessionStorageService/session-storage.service';
 
 @Component({
   selector: 'app-multi-role-screen',
@@ -72,7 +73,7 @@ export class MultiRoleScreenComponent implements OnInit {
   app_language: any;
   languageArray: any;
   
-  constructor(public dataSettingService: dataService, private _config: ConfigService, location: PlatformLocation,
+  constructor(public dataSettingService: dataService,private sessionstorage:sessionStorageService, private _config: ConfigService, location: PlatformLocation,
     public router: Router, private authService: AuthService, private _loginService: loginService, private Czentrix: CzentrixServices,
     private alertMessage: ConfirmationDialogsService, private sanitizer: DomSanitizer, private listnerService: ListnerService, private dialog: MdDialog,
     public HttpServices: HttpServices) {
@@ -179,10 +180,10 @@ export class MultiRoleScreenComponent implements OnInit {
     // if (this.current_role.toLowerCase() === "supervisor") {
       this.Czentrix.userLogout().subscribe(
         (response) => {
-          sessionStorage.removeItem('isOnCall');
-          sessionStorage.removeItem('isEverwellCall');
+          this.sessionstorage.removeItem('isOnCall');
+          this.sessionstorage.removeItem('isEverwellCall');
           sessionStorage.removeItem('apiman_key');   
-          sessionStorage.removeItem("setLanguage");
+          this.sessionstorage.removeItem("setLanguage");
           this.dataSettingService.appLanguage="English";
           this.authService.removeToken();
           this.router.navigate(['']);
@@ -190,10 +191,10 @@ export class MultiRoleScreenComponent implements OnInit {
           // this.socketService.logOut();
         },
         (err) => {
-          sessionStorage.removeItem('isOnCall');
-          sessionStorage.removeItem('isEverwellCall');
+          this.sessionstorage.removeItem('isOnCall');
+          this.sessionstorage.removeItem('isEverwellCall');
           sessionStorage.removeItem('apiman_key');   
-          sessionStorage.removeItem("setLanguage");
+          this.sessionstorage.removeItem("setLanguage");
           this.dataSettingService.appLanguage="English"; 
           this.authService.removeToken();     
           this.router.navigate(['']);
@@ -206,19 +207,19 @@ export class MultiRoleScreenComponent implements OnInit {
   //       if (res.response.status.toUpperCase() !== 'FAIL') {
   //         this.Czentrix.userLogout().subscribe(
   //           (response) => {
-  //             sessionStorage.removeItem('isOnCall');
-  //             sessionStorage.removeItem('isEverwellCall');
-  //             sessionStorage.removeItem('apiman_key');   
-  //             sessionStorage.removeItem("setLanguage");
+  //             this.sessionstorage.removeItem('isOnCall');
+  //             this.sessionstorage.removeItem('isEverwellCall');
+  //             this.sessionstorage.removeItem('apiman_key');   
+  //             this.sessionstorage.removeItem("setLanguage");
   //             this.dataSettingService.appLanguage="English";
   //             this.router.navigate(['']);
   //             // this.socketService.logOut();
   //           },
   //           (err) => {
-  //             sessionStorage.removeItem('isOnCall');
-  //             sessionStorage.removeItem('isEverwellCall');
-  //             sessionStorage.removeItem('apiman_key');   
-  //             sessionStorage.removeItem("setLanguage");
+  //             this.sessionstorage.removeItem('isOnCall');
+  //             this.sessionstorage.removeItem('isEverwellCall');
+  //             this.sessionstorage.removeItem('apiman_key');   
+  //             this.sessionstorage.removeItem("setLanguage");
   //             this.dataSettingService.appLanguage="English";       
   //             this.router.navigate(['']);
   //             // this.socketService.logOut();
@@ -242,28 +243,28 @@ export class MultiRoleScreenComponent implements OnInit {
   //   this.Czentrix.agentLogout(this.dataSettingService.cZentrixAgentID, response).subscribe((res) => {
   //     if( res !== undefined && res !== null) {
   //     if (res.response !== undefined && res.response.status !== undefined && res.response.status.toUpperCase() !== 'FAIL') {
-  //       sessionStorage.removeItem('isOnCall');
-  //       sessionStorage.removeItem('isEverwellCall');
-  //       sessionStorage.removeItem("setLanguage");
+  //       this.sessionstorage.removeItem('isOnCall');
+  //       this.sessionstorage.removeItem('isEverwellCall');
+  //       this.sessionstorage.removeItem("setLanguage");
   //       this.dataSettingService.appLanguage="English";
   //       this.router.navigate(['']);
-  //       sessionStorage.removeItem('apiman_key');
+  //       this.sessionstorage.removeItem('apiman_key');
   //       this.authService.removeToken();
 
   //     } else {
-  //       sessionStorage.removeItem('isOnCall');
-  //       sessionStorage.removeItem('isEverwellCall');
-  //       sessionStorage.removeItem("setLanguage");
+  //       this.sessionstorage.removeItem('isOnCall');
+  //       this.sessionstorage.removeItem('isEverwellCall');
+  //       this.sessionstorage.removeItem("setLanguage");
   //       this.dataSettingService.appLanguage="English";
   //       this.router.navigate(['']);
-  //       sessionStorage.removeItem('apiman_key');
+  //       this.sessionstorage.removeItem('apiman_key');
   //       this.authService.removeToken();
   //     }
   //     }
   //   }, (err) => {
-  //     sessionStorage.removeItem('isOnCall');
-  //     sessionStorage.removeItem('isEverwellCall');
-  //     sessionStorage.removeItem("setLanguage");
+  //     this.sessionstorage.removeItem('isOnCall');
+  //     this.sessionstorage.removeItem('isEverwellCall');
+  //     this.sessionstorage.removeItem("setLanguage");
   //     this.dataSettingService.appLanguage="English";
   //     this.router.navigate(['']);
   //     this.authService.removeToken();
@@ -341,8 +342,8 @@ export class MultiRoleScreenComponent implements OnInit {
   }
 
   getLanguage() {
-    if (sessionStorage.getItem("setLanguage") != null) {
-      this.changeLanguage(sessionStorage.getItem("setLanguage"));
+    if (this.sessionstorage.getItem("setLanguage") != null) {
+      this.changeLanguage(this.sessionstorage.getItem("setLanguage"));
     } else {
       this.changeLanguage(this.app_language);
     }
@@ -372,7 +373,7 @@ export class MultiRoleScreenComponent implements OnInit {
     }
     console.log("language is ", response);
     this.currentLanguageSet = response[language];
-    sessionStorage.setItem("setLanguage", language);
+    this.sessionstorage.setItem("setLanguage", language);
     if (this.currentLanguageSet) {
       this.languageArray.forEach((item) => {
         if (item.languageName === language) {
