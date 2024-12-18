@@ -240,9 +240,9 @@ export class loginContentClass implements OnInit, OnDestroy {
       .authenticateUser(this.userID, this.encryptPassword, doLogOut)
       .subscribe(
         (response: any) => {
-          console.error("response",response);
-          let tkn = response.Jwttoken;
-          this.sessionstorage.setCookie('Jwttoken', tkn,1 );
+          // console.error("response",response);
+          // let tkn = response.Jwttoken;
+          // this.sessionstorage.setCookie('Jwttoken', tkn,1 );
          
           if (
             response !== undefined &&
@@ -294,9 +294,9 @@ export class loginContentClass implements OnInit, OnDestroy {
       .authenticateUser(this.userID, this.encryptPassword, doLogOut)
       .subscribe(
         (response: any) => {
-          console.log("response.Jwttoken",response)
-          let tkn = response.Jwttoken;
-          this.sessionstorage.setCookie('Jwttoken', tkn,1 );
+          // console.log("response.Jwttoken",response)
+          // let tkn = response.Jwttoken;
+          // this.sessionstorage.setCookie('Jwttoken', tkn,1 );
           if (
             response !== undefined &&
             response !== null &&

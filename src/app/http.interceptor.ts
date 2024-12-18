@@ -149,25 +149,23 @@ export class InterceptedHttp extends Http {
         if (options.headers == null) {
             options.headers = new Headers();
         }
-    //     const value = `; ${document.cookie}`;
-    //   const parts = value.split(`; ${name}=`);
-    //  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
-    let cvalue="";
-    var nameEQ = 'Jwttoken' + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) cvalue= c.substring(nameEQ.length, c.length);
-    }
+    
+    // let cvalue="";
+    // var nameEQ = 'Jwttoken' + "=";
+    // var ca = document.cookie.split(';');
+    // for (var i = 0; i < ca.length; i++) {
+    //   var c = ca[i];
+    //   while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    //   if (c.indexOf(nameEQ) == 0) cvalue= c.substring(nameEQ.length, c.length);
+    // }
 
-        console.error(" Jwt_token",cvalue);
-        let Jwt_token: any;
-        if (cvalue && cvalue!== null) {
+    //     console.error(" Jwt_token",cvalue);
+    //     let Jwt_token: any;
+    //     if (cvalue && cvalue!== null) {
 
-            Jwt_token = cvalue;
+    //         Jwt_token = cvalue;
             
-        }
+    //     }
         let authToken:any;
         if (sessionStorage.getItem('authToken')) {
             authToken= sessionStorage.getItem('authToken');
@@ -175,7 +173,7 @@ export class InterceptedHttp extends Http {
         options.headers.append('Content-Type', 'application/json');
         options.headers.append('Access-Control-Allow-Origin', '*');
         options.headers.append('Authorization', authToken);
-        options.headers.append('Jwttoken', Jwt_token);
+        // options.headers.append('Jwttoken', Jwt_token);
         return options;
     }
     private onEnd(): void {
