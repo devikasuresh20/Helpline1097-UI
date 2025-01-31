@@ -38,15 +38,15 @@ const adminIP = 'https://amritwprdev.piramalswasthya.org/';
 export class ConfigService {
 
     // private _commonBaseURL: String = `${commonIP}commonapi-v1.0/`;
-    private _commonBaseURL: String = `https://amritwprdev.piramalswasthya.org/commonapi-v3.0.0/`;
+    private _commonBaseURL: String = `https://amritwprdev.piramalswasthya.org/commonapi-v1.0/`;
     // private _commonBaseURL: String=`http://localhost:8080/`;
     // private openCommonURL: String = `${commonIP}commonapi-v1.0/`;
-    private openCommonURL: String = `https://amritwprdev.piramalswasthya.org/commonapi-v3.0.0/`;
-    private _helpline1097BaseURL: String = `${IP1097}1097api-v3.0.0/`;
+    private openCommonURL: String = `https://amritwprdev.piramalswasthya.org/commonapi-v1.0/`;
+    private _helpline1097BaseURL: String = `${IP1097}1097api-v1.0/`;
     private _telephonyServerURL: String = `${telephonyServerIP}`;
     private _localeString = 'en-in';
-    private adminBaseUrl = `${adminIP}adminapi-v3.0.0/`;
-    private _opencommonBaseURL: String = `${commonIP}commonapi-v3.0.0/`;
+    private adminBaseUrl = `${adminIP}adminapi-v1.0/`;
+    private _opencommonBaseURL: String = `${commonIP}commonapi-v1.0/`;
 
     // private _commonBaseURL: String = 'http://deviemr.piramalswasthya.org:8080/commonapi-v1.0/';
     // private _helpline1097BaseURL: String = 'http://deviemr.piramalswasthya.org:8080/1097api-v1.0/';
