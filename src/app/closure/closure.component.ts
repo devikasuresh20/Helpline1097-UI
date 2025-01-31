@@ -43,6 +43,7 @@ import { SetLanguageComponent } from "app/set-language.component";
 import { HttpServices } from "app/services/http-services/http_services.service";
 import { Router } from "@angular/router";
 import { environment } from "environments/environment";
+import { sessionStorageService } from "app/services/sessionStorageService/session-storage.service";
 
 @Component({
   selector: "app-closure",
@@ -114,6 +115,7 @@ export class ClosureComponent implements OnInit {
     private czentrixServices: CzentrixServices,
     private clearfornData: ClearFormService,
     private HttpServices: HttpServices,
+    private sessionstorage:sessionStorageService,
     public router: Router
   ) {
     this.subscription = this.pass_data.getData().subscribe((benData) => {
@@ -131,7 +133,7 @@ export class ClosureComponent implements OnInit {
     this.saved_data.beneficiary_regID_subject.subscribe((response) => {
       this.setBenRegID(response);
     });
-    this.isEverwell = sessionStorage.getItem("isEverwellCall");
+    this.isEverwell = this.sessionstorage.getItem("isEverwellCall");
     if (this.isEverwell === "yes") {
       this.saved_data.everwellBeneficiarySelected.subscribe((response) => {
         this.setEverwellBenRegID(response);
@@ -656,7 +658,7 @@ export class ClosureComponent implements OnInit {
     this.saved_data.beneficiaryRegID = null;
   }
   showAlert() {
-    sessionStorage.removeItem("isOnCall");
+    this.sessionstorage.removeItem("isOnCall");
     if (this.transferValid == true) {
       this.message.alert(
         this.currentLanguageSet.callTransferredSuccessfully,

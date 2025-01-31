@@ -236,6 +236,7 @@ import { searchIdDirective } from './directives/searchid/searchId.directive';
 import { SmsTemplateDirective } from './directives/smsTemplate/smsTemplate.directive';
 import { textareaDirectiveWithCopyPaste } from './directives/textarea/textareaDirectiveWithCopyPaste';
 import { SmsTemplateDirectiveWithCopyPaste } from './directives/smsTemplate/smsTemplateWithcopypaste.directive';
+import { sessionStorageService } from './services/sessionStorageService/session-storage.service';
 // import { SetLanguageComponent } from './set-language.component';
 //for text mask
 // import { TextMaskModule } from 'angular2-text-mask';
@@ -411,7 +412,7 @@ import { SmsTemplateDirectiveWithCopyPaste } from './directives/smsTemplate/smsT
   providers: [loginService, ClearFormService, dataService, DashboardHttpServices, SPService, RegisterService,
     UserService, LanguageService, RoleService, ServicemasterService, ScreenService, HttpServices, HttpClientModule,
     UserBeneficiaryData, LocationService, CoReferralService, CoFeedbackService, FeedbackTypes,
-    UpdateService, CallServices, ConfigService, Message, SupervisorCallTypeReportService, FeedbackService, AuthGuard, AuthGuard2, SocketService,
+    UpdateService, CallServices, ConfigService, Message, SupervisorCallTypeReportService, FeedbackService, AuthGuard, AuthGuard2, SocketService,sessionStorageService,
     CoCategoryService, UploadServiceService, OutboundSearchRecordService, OutboundWorklistService,
     OutboundCallAllocationService, NotificationService, ConfirmationDialogsService, LoaderService, ForceLogoutService,
     CommunicationService, OutboundService, ListnerService, AuthService, OutboundReAllocationService, ReloadService, ReportsService,

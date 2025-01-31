@@ -47,6 +47,7 @@ import { CollapseDirective } from "./../directives/collapse/collapse.directive";
 import { ClearFormService } from "./../services/common/clearform.service";
 import { SetLanguageComponent } from "app/set-language.component";
 import { HttpServices } from "../services/http-services/http_services.service";
+import { sessionStorageService } from "app/services/sessionStorageService/session-storage.service";
 @Component({
   selector: "app-1097-co",
   templateUrl: "./1097-co.component.html",
@@ -85,6 +86,7 @@ export class helpline1097CoComponent implements OnInit {
 
   constructor(
     public getCommonData: dataService,
+    private sessionstorage:sessionStorageService,
     public basicrouter: Router,
     public router: ActivatedRoute,
     private configService: ConfigService,
@@ -121,12 +123,12 @@ export class helpline1097CoComponent implements OnInit {
     let url =
       this.configService.getTelephonyServerURL() + "bar/cti_handler.php";
     this.ctiHandlerURL = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    if (sessionStorage.getItem("CLI") !== undefined) {
-      this.callerNumber = sessionStorage.getItem("CLI");
+    if (this.sessionstorage.getItem("CLI") !== undefined) {
+      this.callerNumber = this.sessionstorage.getItem("CLI");
       this.getCommonData.callerNumber = this.callerNumber;
     }
-    if (sessionStorage.getItem("session_id") !== undefined) {
-      this.getCommonData.callID = sessionStorage.getItem("session_id");
+    if (this.sessionstorage.getItem("session_id") !== undefined) {
+      this.getCommonData.callID = this.sessionstorage.getItem("session_id");
     }
     // this.router.params.subscribe((params: Params) => {
     //   if (params['mobileNumber'] != undefined) {
@@ -140,7 +142,7 @@ export class helpline1097CoComponent implements OnInit {
 
     // });
     this.disableBack = false;
-    this.isEverwell = sessionStorage.getItem("isEverwellCall");
+    this.isEverwell = this.sessionstorage.getItem("isEverwellCall");
 
     this.submitCheck = this.getCommonData.checkEverwellResponse;
     console.log("submitCheck", this.submitCheck);
@@ -285,8 +287,8 @@ export class helpline1097CoComponent implements OnInit {
   closeCall(compain_type: any) {
     this.getCommonData.current_campaign = compain_type;
     this.getCommonData.isCallDisconnected = false;
-    sessionStorage.removeItem("isOnCall");
-    sessionStorage.removeItem("isEverwellCall");
+    this.sessionstorage.removeItem("isOnCall");
+    this.sessionstorage.removeItem("isEverwellCall");
 
     this.basicrouter.navigate(["/MultiRoleScreenComponent/dashboard"], {
       queryParams: { compain: compain_type },
